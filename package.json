@@ -2,10 +2,14 @@
   "name": "dev-shop-sample",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.4.3",
+    "express": "^4.4.5"
+  },
   "scripts": {
-	"start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+	"test": "echo \"Error: no test specified\" && exit 1",
+	"start": "node server.js"
   },
   "engines": {
     "node": "0.12.5",

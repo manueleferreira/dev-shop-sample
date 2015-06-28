@@ -11,24 +11,24 @@ app.use('/', express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+app.get('/products.json', function(req, res) {
+  fs.readFile('products.json', function(err, data) {
+    res.setHeader('Cache-Control', 'no-cache');
+    res.json(JSON.parse(data));
+  });
+});
 
-//app.get('/comments.json', function(req, res) {
-//  fs.readFile('comments.json', function(err, data) {
-//    res.setHeader('Cache-Control', 'no-cache');
-//    res.json(JSON.parse(data));
-//  });
-//});
-
-//app.post('/comments.json', function(req, res) {
-//  fs.readFile('comments.json', function(err, data) {
-//    var comments = JSON.parse(data);
-//    comments.push(req.body);
-//    fs.writeFile('comments.json', JSON.stringify(comments, null, 4), function(err) {
-//      res.setHeader('Cache-Control', 'no-cache');
-//      res.json(comments);
-//    });
-//  });
-//});
+app.post('/products.json', function(req, res) {
+  fs.readFile('products.json', function(err, data) {
+    var products = JSON.parse(data);
+    products.push(req.body);
+    fs.writeFile('products.json', JSON.stringify(products, null, 4), function(err) 
+    {
+       res.setHeader('Cache-Control', 'no-cache');
+       res.json(products);
+    });
+  });
+});
 
 
 app.listen(app.get('port'), function() {

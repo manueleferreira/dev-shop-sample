@@ -1,4 +1,7 @@
-
+var data = [
+	{author: "Jose Maria", price:"R$1"},
+	{author: "Maria Jose", price:"R$2"}
+];
 
 var Product = React.createClass({
 	render: function(){
@@ -24,6 +27,11 @@ var ProductForm = React.createClass({
 
 var ProductList = React.createClass({
 	render: function() {
+		var productNodes = this.props.data.map(function(product){
+			return (
+				<Product author={product.author} price={product.price}></Product>
+			);
+		});
 		return (
 			<div class="cart row">
 				<h2>Cart</h2>
@@ -36,8 +44,7 @@ var ProductList = React.createClass({
 						</tr>
 					</thead>
 					<tbody>
-						<Product author="Jose" price="R$1"></Product>
-						<Product author="Maria" price="R$2"></Product>
+						{productNodes}
 					</tbody>
 				</table>
 			</div>
@@ -46,20 +53,40 @@ var ProductList = React.createClass({
 });
 
 var DevShop = React.createClass({
-  render: function() {
-    return (
-    	<div>
-			<div class="row">
-				<h1>Dev Shop</h1>
+	loadProductsFromServer: function(){
+		$.ajax({
+			url: this.props.url,
+			dataType: 'json',
+			cache: false,
+			success: function(data) {
+				this.setState({data: data});
+			}.bind(this),
+			error: function(xhr, status, err) {
+				console.error(this.props.url, status, err.toString());
+			}.bind(this)
+		});
+	},
+	getInitialState: function() {
+		return {data: []};
+	},
+	componentDidMount: function(){
+		this.loadProductsFromServer();
+		setInterval(this.loadProductsFromServer, this.props.pollInterval);
+	},
+	render: function() {
+		return (
+			<div>
+				<div class="row">
+					<h1>Dev Shop</h1>
+				</div>
+				<ProductForm />
+				<ProductList data={this.state.data} />
 			</div>
-			<ProductForm />
-			<ProductList />
-		</div>
-    );
-  }
+		);
+	}
 });
 
 React.render(
-  React.createElement(DevShop, null),
+  <DevShop url="products.json" pollInterval={2000} />,
   document.getElementById('container')
 );

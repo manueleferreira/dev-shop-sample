@@ -1,18 +1,45 @@
-var ItemForm = React.createClass({
+
+
+var Product = React.createClass({
 	render: function(){
 		return (
-			<div className="itemForm">
-				itemForm
+			<tr class="product">
+              <td>{this.props.author}</td>
+              <td>{this.props.price}</td>
+              <td><button class="btn btn-danger pull-right">Remove</button></td>
+            </tr>
+		);
+	}
+});
+
+var ProductForm = React.createClass({
+	render: function(){
+		return (
+			<div className="productForm">
+				productForm
 			</div>
 		);
 	}
 });
 
-var ItemList = React.createClass({
+var ProductList = React.createClass({
 	render: function() {
 		return (
-			<div className="itemList">
-				itemList
+			<div class="cart row">
+				<h2>Cart</h2>
+				<table class="table">
+					<thead>
+						<tr>
+						  <th>Username</th>
+						  <th>Price</th>
+						  <th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<Product author="Jose" price="R$1"></Product>
+						<Product author="Maria" price="R$2"></Product>
+					</tbody>
+				</table>
 			</div>
 		);
 	}
@@ -21,12 +48,12 @@ var ItemList = React.createClass({
 var DevShop = React.createClass({
   render: function() {
     return (
-    	<div class="devShopRow">
+    	<div>
 			<div class="row">
 				<h1>Dev Shop</h1>
 			</div>
-			<ItemForm />
-			<ItemList />
+			<ProductForm />
+			<ProductList />
 		</div>
     );
   }

@@ -2,9 +2,9 @@
   "name": "dev-shop-sample",
   "version": "0.1.4",
   "description": "A sample Node.js app using Express 4",
-  "main": "index.html",
+  "main": "index.js",
   "scripts": {
-    "start": "node index.html"
+    "start": "node index.js"
   },
   "dependencies": {
     "ejs": "^2.3.1",

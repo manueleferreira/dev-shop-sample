@@ -1,0 +1,26 @@
+{
+  "name": "dev-shop-sample",
+  "version": "0.1.4",
+  "description": "A sample Node.js app using Express 4",
+  "main": "index.html",
+  "scripts": {
+    "start": "node script/main.js"
+  },
+  "dependencies": {
+    "ejs": "^2.3.1",
+    "express": "~4.9.x"
+  },
+  "engines": {
+    "node": "0.12.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/manueleferreira/dev-shop-sample"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ],
+  "license": "MIT"
+}

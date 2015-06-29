@@ -10,13 +10,13 @@ var ProductList = React.createClass({
 		}
 		catch(err)
 		{
-			console.log("ERROR - {0}".format(err));
+			console.log(String.format("ERROR - {0}", err));
 		}
 	},
 	render: function() {
 		var productNodes = this.props.data.map(function(product){
 			return (
-				<Product author={product.author} price={product.price}></Product>
+				<Product _id={product._id} author={product.author} price={product.price}></Product>
 			);
 		});
 		return (
@@ -25,7 +25,7 @@ var ProductList = React.createClass({
 				<table class="table">
 					<thead>
 						<tr>
-						  <th>Username</th>
+						  <th colspan="2">Username</th>
 						  <th>Price</th>
 						  <th></th>
 						</tr>

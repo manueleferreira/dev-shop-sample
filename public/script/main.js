@@ -16,15 +16,33 @@ var DevShop = React.createClass({
 		}
 		catch(err)
 		{
-			console.log("ERROR - {0}".format(err));
+			console.log(String.format("ERROR - {0}", err));
 		}
+	},
+	handleRemoveButton: function(product) {
+		try
+		{
+			$.ajax({
+				url: this.props.url,
+				dataType: 'json',
+				type: "DELETE",
+				data: product,
+				success: function(data){
+					this.setState({data: data});
+				}.bind(this),
+				error: function(xhr, status, err) {
+					console.error(this.props.url, status, err.toString());
+				}.bind(this)
+			})
+		}
+		catch(err)
+		{
+			console.log(String.format("ERROR - {0}", err));
+		}	
 	},
 	handleProductSubmit: function(product) {
 		try
 		{
-			var products = this.state.data;
-			var newProductList = products.concat([product]);
-			this.setState({data: newProductList});
 			$.ajax({
 				url: this.props.url,
 				dataType: 'json',
@@ -40,7 +58,7 @@ var DevShop = React.createClass({
 		}
 		catch(err)
 		{
-			console.log("ERROR - {0}".format(err));
+			console.log(String.format("ERROR - {0}", err));
 		}
 	},
 	getInitialState: function() {
@@ -50,7 +68,7 @@ var DevShop = React.createClass({
 		}
 		catch(err)
 		{
-			console.log("ERROR - {0}".format(err));
+			console.log(String.format("ERROR - {0}", err));
 		}
 	},
 	componentDidMount: function(){
@@ -61,7 +79,7 @@ var DevShop = React.createClass({
 		}
 		catch(err)
 		{
-			console.log("ERROR - {0}".format(err));
+			console.log(String.format("ERROR - {0}", err));
 		}	
 	},
 	render: function() {
@@ -78,6 +96,6 @@ var DevShop = React.createClass({
 });
 
 React.render(
-  <DevShop url="products.json" pollInterval={2000} />,
+  <DevShop url="/products" pollInterval={2000} />,
   document.getElementById('container')
 );

@@ -5,21 +5,22 @@ var Product = React.createClass({
 			var node = this.getDOMNode();
 			React.unmountComponentAtNode(node);
 			$(node).remove();			
-			return;	
 
-			//this.props.handleRemoveButton(product);
+			this.props.handleRemoveButton(node);
+			return;
 		}
 		catch(err)
 		{
-			console.log("ERROR - {0}".format(err));	
+			console.log("ERROR - " + err);
 		}
 	},
 	render: function(){
 		return (
 			<tr class="product">
-              <td>{this.props.author}</td>
-              <td>{this.props.price}</td>
-              <td><button class="btn btn-danger pull-right" onClick={this.handleRemove}>Remove</button></td>
+				<td>{this.props._id}</td>
+				<td>{this.props.author}</td>
+				<td>{this.props.price}</td>
+				<td><button class="btn btn-danger pull-right" onClick={this.handleRemove}>Remove</button></td>
             </tr>
 		);
 	}
@@ -47,7 +48,7 @@ var ProductForm = React.createClass({
 		}
 		catch(err)
 		{
-			console.log("ERROR - {0}".format(err));
+			console.log(String.format("ERROR - {0}", err));
 		}
 	},
 	render: function(){

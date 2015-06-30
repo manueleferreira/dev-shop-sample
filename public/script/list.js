@@ -9,6 +9,11 @@ var ProductList = React.createClass({
 			console.log("ERROR - " + err);
 		}
 	},
+	onChangePage: function(page) {
+        return request(url, {page: page}).then(function(items) {
+            this.setState({items: items});
+        }.bind(this));
+    },
 	render: function() {
 		var functionRemove = this.handleRemove;
 		var productNodes = this.props.data.map(function(product){
@@ -19,6 +24,8 @@ var ProductList = React.createClass({
 		return (
 			<div class="cart row">
 				<h2>Cart</h2>
+				<Paginator max={5} onChange={this.onChangePage}/>
+
 				<table class="table">
 					<thead>
 						<tr>

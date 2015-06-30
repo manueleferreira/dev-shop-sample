@@ -13,7 +13,7 @@ var ProductList = React.createClass({
 		var functionRemove = this.handleRemove;
 		var productNodes = this.props.data.map(function(product){
 			return (
-				<Product _id={product._id} author={product.author} price={product.price} handleRemove={functionRemove}></Product>
+				<Product _id={product._id} author={product.author} price={product.price} hours={product.hours} handleRemove={functionRemove}></Product>
 			);
 		});
 		return (
@@ -24,6 +24,7 @@ var ProductList = React.createClass({
 						<tr>
 						  <th colspan="2">Username</th>
 						  <th>Price</th>
+						  <th>Hours</th>
 						  <th></th>
 						</tr>
 					</thead>

@@ -22,6 +22,7 @@ var Product = React.createClass({
 				<td>{this.props._id}</td>
 				<td>{this.props.author}</td>
 				<td>{this.props.price}</td>
+				<td>{this.props.hours}</td>
 				<td><button class="btn btn-danger pull-right" onClick={this.onProductRemove}>Remove</button></td>
             </tr>
 		);
@@ -36,16 +37,21 @@ var ProductForm = React.createClass({
 			e.preventDefault();
 			var authorDOMNode = React.findDOMNode(this.refs.author);
 			var priceDOMNode = React.findDOMNode(this.refs.price);
+			var hoursDOMNode = React.findDOMNode(this.refs.hours);
+
 			var author = authorDOMNode.value.trim();
 			var price = priceDOMNode.value.trim();
-			if(!author || !price){
+			var hours = hoursDOMNode.value.trim();
+			if(!author || !price || !hours){
 				return;
 			}
 
-			this.props.onProductSubmit({author: author, price: price});
+			this.props.onProductSubmit({author: author, price: price, hours: hours});
 
 			authorDOMNode.value = '';
 			priceDOMNode.value = '';
+			hoursDOMNode.value = '';
+			
 			return;	
 		}
 		catch(err)
@@ -63,6 +69,9 @@ var ProductForm = React.createClass({
 					</div>
 					<div class="form-group">
 						<input type="text" placeholder="Price" class="form-control" ref="price"></input>
+					</div>
+					<div class="form-group">
+						<input type="text" placeholder="Hours" class="form-control" ref="hours"></input>
 					</div>
 					<button type="submit" class="btn btn-success">Add</button>
 				</form>

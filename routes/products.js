@@ -30,10 +30,22 @@ exports.findAll = function(req, res) {
     });
 };
 
-exports.addProduct = function(req, res) {
-    var product = req.body;
-    console.log('Adding product: ' + JSON.stringify(product));
+function saveProduct(product)
+{
+    db.collection('products', function(err, collection) {
+        collection.insert(product, {safe:true}, function(err, result) {
+            if (err) {
+                res.send({'error':'An error has occurred'});
+            } else {
+                console.log('Success: ' + JSON.stringify(result[0]));
+                res.send(result[0]);
+            }
+        });
+    });
+}
 
+function getInfoFromUser(product)
+{
     var url = "https://api.github.com/users/"+product.author;
     request({
         uri: url,
@@ -44,19 +56,30 @@ exports.addProduct = function(req, res) {
         headers: {'user-agent': 'manueleferreira'}
     }, 
     function(error, response, body) {
-        console.log(body);
+        var json = JSON.parse(body);
+        product.price = calculatePrice(json);
+        
+        console.log("price: "+product.price);
 
-        db.collection('products', function(err, collection) {
-            collection.insert(product, {safe:true}, function(err, result) {
-                if (err) {
-                    res.send({'error':'An error has occurred'});
-                } else {
-                    console.log('Success: ' + JSON.stringify(result[0]));
-                    res.send(result[0]);
-                }
-            });
-        });
+        saveProduct(product);
     });
+}
+
+function calculatePrice(json)
+{
+    var repos = json.public_repos;
+    var followers = json.followers;
+
+    generatedPrice = repos+followers;
+
+    return generatedPrice;
+}
+
+exports.addProduct = function(req, res) {
+    var product = req.body;
+    console.log('Adding product: ' + JSON.stringify(product));
+
+    getInfoFromUser(product);    
 }
 
 exports.deleteProduct = function(req, res) {

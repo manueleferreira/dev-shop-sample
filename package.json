@@ -9,8 +9,8 @@
     "mongodb": "1.4.x",
     "mongoose": "3.8.24",
     "mocha": "1.18.2",
-    "expect": "0.3.1",
-    "superagent": "0.17.0"
+    "superagent": "0.17.0",
+    "supertest": "*"
   },
   "scripts": {
   	"test": "echo \"Error: no test specified\" && exit 1",

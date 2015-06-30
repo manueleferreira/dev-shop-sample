@@ -23,9 +23,7 @@ db.open(function(err, db) {
 
 exports.findAll = function(req, res) {
     db.collection('products', function(err, collection) {
-    	console.log("findAll products");
         collection.find().toArray(function(err, items) {
-        	console.log("findAll products"+items);
         	res.send(items);
         });
     });
@@ -47,7 +45,7 @@ exports.addProduct = function(req, res) {
 }
 
 exports.deleteProduct = function(req, res) {
-    var id = req.params._id;
+    var id = req.params.id;
     console.log('Deleting product: ' + id);
     db.collection('products', function(err, collection) {
         collection.remove({'_id':new BSON.ObjectID(id)}, {safe:true}, function(err, result) {

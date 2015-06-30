@@ -14,8 +14,10 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.get('/products', products.findAll);
 app.post('/products', products.addProduct);
-app.delete('/products/:id', products.deleteProduct);
+app.post('/products/:id', products.deleteProduct);
 
-app.listen(app.get('port'), function() {
-  console.log('Server started: http://localhost:' + app.get('port') + '/');
+var server = app.listen(app.get('port'), function() {
+	console.log('Server started: http://localhost:' + app.get('port') + '/');
 });
+
+module.exports = server;

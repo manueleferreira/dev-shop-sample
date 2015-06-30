@@ -1,12 +1,14 @@
 var Product = React.createClass({
-	handleRemove: function(e) {
+	onProductRemove: function(e) {
 		try
 		{
+			console.log("handleRemove");
 			var node = this.getDOMNode();
 			React.unmountComponentAtNode(node);
 			$(node).remove();			
 
-			this.props.handleRemoveButton(node);
+			this.props.handleRemove(this.props._id);
+
 			return;
 		}
 		catch(err)
@@ -20,7 +22,7 @@ var Product = React.createClass({
 				<td>{this.props._id}</td>
 				<td>{this.props.author}</td>
 				<td>{this.props.price}</td>
-				<td><button class="btn btn-danger pull-right" onClick={this.handleRemove}>Remove</button></td>
+				<td><button class="btn btn-danger pull-right" onClick={this.onProductRemove}>Remove</button></td>
             </tr>
 		);
 	}

@@ -1,22 +1,19 @@
 var ProductList = React.createClass({
-	handleRemoveButton: function(product) {
+	handleRemove: function(id) {
 		try
 		{
-			console.log("remove product list");
-			var node = this.getDOMNode();
-			React.unmountComponentAtNode(node);
-			$(node).remove();			
-			return;	
+			this.props.handleRemoveList(id);
 		}
 		catch(err)
 		{
-			console.log(String.format("ERROR - {0}", err));
+			console.log("ERROR - " + err);
 		}
 	},
 	render: function() {
+		var functionRemove = this.handleRemove;
 		var productNodes = this.props.data.map(function(product){
 			return (
-				<Product _id={product._id} author={product.author} price={product.price}></Product>
+				<Product _id={product._id} author={product.author} price={product.price} handleRemove={functionRemove}></Product>
 			);
 		});
 		return (

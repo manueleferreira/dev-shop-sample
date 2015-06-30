@@ -1,4 +1,25 @@
 var DevShop = React.createClass({
+	handleRemoveList: function(id) {
+		try
+		{
+			var deleteUrl = this.props.url+"/"+id;
+			$.ajax({
+				url: deleteUrl,
+				dataType: 'json',
+				type: "POST",
+				success: function(data){
+					this.setState({data: data});
+				}.bind(this),
+				error: function(xhr, status, err) {
+					console.error(this.props.url, status, err.toString());
+				}.bind(this)
+			})
+		}
+		catch(err)
+		{
+			console.log("ERROR - " + err);
+		}
+	},
 	loadProductsFromServer: function(){
 		try
 		{
@@ -18,27 +39,6 @@ var DevShop = React.createClass({
 		{
 			console.log(String.format("ERROR - {0}", err));
 		}
-	},
-	handleRemoveButton: function(product) {
-		try
-		{
-			$.ajax({
-				url: this.props.url,
-				dataType: 'json',
-				type: "DELETE",
-				data: product,
-				success: function(data){
-					this.setState({data: data});
-				}.bind(this),
-				error: function(xhr, status, err) {
-					console.error(this.props.url, status, err.toString());
-				}.bind(this)
-			})
-		}
-		catch(err)
-		{
-			console.log(String.format("ERROR - {0}", err));
-		}	
 	},
 	handleProductSubmit: function(product) {
 		try
@@ -89,7 +89,7 @@ var DevShop = React.createClass({
 					<h1>Dev Shop</h1>
 				</div>
 				<ProductForm onProductSubmit={this.handleProductSubmit} />
-				<ProductList data={this.state.data} handleRemoveButton={this.handleRemoveButton} />
+				<ProductList data={this.state.data} handleRemoveList={this.handleRemoveList} />
 			</div>
 		);
 	}

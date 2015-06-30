@@ -36,27 +36,24 @@ var ProductForm = React.createClass({
 			console.log("submit form");
 			e.preventDefault();
 			var authorDOMNode = React.findDOMNode(this.refs.author);
-			var priceDOMNode = React.findDOMNode(this.refs.price);
 			var hoursDOMNode = React.findDOMNode(this.refs.hours);
 
 			var author = authorDOMNode.value.trim();
-			var price = priceDOMNode.value.trim();
 			var hours = hoursDOMNode.value.trim();
-			if(!author || !price || !hours){
+			if(!author || !hours){
 				return;
 			}
 
-			this.props.onProductSubmit({author: author, price: price, hours: hours});
+			this.props.onProductSubmit({author: author, hours: hours});
 
 			authorDOMNode.value = '';
-			priceDOMNode.value = '';
 			hoursDOMNode.value = '';
 
 			return;	
 		}
 		catch(err)
 		{
-			console.log(String.format("ERROR - {0}", err));
+			console.log("ERROR - " + err);
 		}
 	},
 	render: function(){
@@ -66,9 +63,6 @@ var ProductForm = React.createClass({
 				<form class="form-inline" role="form" onSubmit={this.handleSubmit}>
 					<div class="form-group">
 						<input type="text" placeholder="GitHub Username" class="form-control" ref="author" required></input>
-					</div>
-					<div class="form-group">
-						<input type="text" placeholder="Price" class="form-control" ref="price" required></input>
 					</div>
 					<div class="form-group">
 						<input type="text" placeholder="Hours" class="form-control" ref="hours" required></input>

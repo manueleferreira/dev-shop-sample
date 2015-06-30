@@ -1,4 +1,5 @@
 var mongodb = require('mongodb');
+var request = require("request");
 
 var Server = mongodb.Server,
     Db = mongodb.Db,
@@ -32,14 +33,28 @@ exports.findAll = function(req, res) {
 exports.addProduct = function(req, res) {
     var product = req.body;
     console.log('Adding product: ' + JSON.stringify(product));
-    db.collection('products', function(err, collection) {
-        collection.insert(product, {safe:true}, function(err, result) {
-            if (err) {
-                res.send({'error':'An error has occurred'});
-            } else {
-                console.log('Success: ' + JSON.stringify(result[0]));
-                res.send(result[0]);
-            }
+
+    var url = "https://api.github.com/users/"+product.author;
+    request({
+        uri: url,
+        method: "GET",
+        timeout: 10000,
+        followRedirect: true,
+        maxRedirects: 10,
+        headers: {'user-agent': 'manueleferreira'}
+    }, 
+    function(error, response, body) {
+        console.log(body);
+
+        db.collection('products', function(err, collection) {
+            collection.insert(product, {safe:true}, function(err, result) {
+                if (err) {
+                    res.send({'error':'An error has occurred'});
+                } else {
+                    console.log('Success: ' + JSON.stringify(result[0]));
+                    res.send(result[0]);
+                }
+            });
         });
     });
 }
@@ -58,7 +73,6 @@ exports.deleteProduct = function(req, res) {
         });
     });
 }
-
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 // Populate database with sample data -- Only used once: the first time the application is started.

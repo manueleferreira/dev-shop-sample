@@ -51,7 +51,7 @@ var ProductForm = React.createClass({
 			authorDOMNode.value = '';
 			priceDOMNode.value = '';
 			hoursDOMNode.value = '';
-			
+
 			return;	
 		}
 		catch(err)
@@ -65,13 +65,13 @@ var ProductForm = React.createClass({
 				<h2>Add a developer</h2>
 				<form class="form-inline" role="form" onSubmit={this.handleSubmit}>
 					<div class="form-group">
-						<input type="text" placeholder="GitHub Username" class="form-control" ref="author"></input>
+						<input type="text" placeholder="GitHub Username" class="form-control" ref="author" required></input>
 					</div>
 					<div class="form-group">
-						<input type="text" placeholder="Price" class="form-control" ref="price"></input>
+						<input type="text" placeholder="Price" class="form-control" ref="price" required></input>
 					</div>
 					<div class="form-group">
-						<input type="text" placeholder="Hours" class="form-control" ref="hours"></input>
+						<input type="text" placeholder="Hours" class="form-control" ref="hours" required></input>
 					</div>
 					<button type="submit" class="btn btn-success">Add</button>
 				</form>

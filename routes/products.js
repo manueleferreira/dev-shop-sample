@@ -29,6 +29,7 @@ exports.findAll = function(req, res) {
     console.log('Listing page: ' + page);
     db.collection('products', function(err, collection) {
         collection.find().toArray(function(err, items) {
+            console.log('All items: ' + items);            
             var json = getPaginatedItems(items, page);
 
             console.log('Listing page: ' + json);
@@ -37,8 +38,17 @@ exports.findAll = function(req, res) {
     });
 };
 
-function getPaginatedItems(items, offset) {
-    return items.slice(offset, offset + PER_PAGE);
+function getPaginatedItems(items, page) {
+    try
+    {
+        var offset = parseInt(page-1);
+        var start = parseInt(offset*PER_PAGE);
+        return items.slice(start, parseInt(start+PER_PAGE));
+    }
+    catch(err)
+    {
+        console.log("ERROR - " + err);
+    }
 }
 
 function saveProduct(product)

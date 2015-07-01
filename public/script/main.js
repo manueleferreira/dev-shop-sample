@@ -8,7 +8,9 @@ var DevShop = React.createClass({
 				dataType: 'json',
 				type: "POST",
 				success: function(data){
-					this.setState({data: data});
+					this.setState({
+		                data: data
+        			});
 				}.bind(this),
 				error: function(xhr, status, err) {
 					console.error(this.props.url, status, err.toString());
@@ -20,15 +22,18 @@ var DevShop = React.createClass({
 			console.log("ERROR - " + err);
 		}
 	},
-	loadProductsFromServer: function(){
+	loadProductsFromServer: function(page){
 		try
 		{
+			var url = this.props.url+"/"+page;
 			$.ajax({
-				url: this.props.url,
+				url: url,
 				dataType: 'json',
 				cache: false,
 				success: function(data) {
-					this.setState({data: data});
+					this.setState({
+		                data: data
+        			});
 				}.bind(this),
 				error: function(xhr, status, err) {
 					console.error(this.props.url, status, err.toString());
@@ -37,7 +42,7 @@ var DevShop = React.createClass({
 		}
 		catch(err)
 		{
-			console.log(String.format("ERROR - {0}", err));
+			console.log("ERROR - " + err);
 		}
 	},
 	handleProductSubmit: function(product) {
@@ -49,7 +54,9 @@ var DevShop = React.createClass({
 				type: "POST",
 				data: product,
 				success: function(data){
-					this.setState({data: data});
+					this.setState({
+		                data: data
+        			});
 				}.bind(this),
 				error: function(xhr, status, err) {
 					console.error(this.props.url, status, err.toString());
@@ -58,7 +65,7 @@ var DevShop = React.createClass({
 		}
 		catch(err)
 		{
-			console.log(String.format("ERROR - {0}", err));
+			console.log("ERROR - " + err);
 		}
 	},
 	getInitialState: function() {
@@ -68,18 +75,17 @@ var DevShop = React.createClass({
 		}
 		catch(err)
 		{
-			console.log(String.format("ERROR - {0}", err));
+			console.log("ERROR - " + err);
 		}
 	},
 	componentDidMount: function(){
 		try
 		{
-			this.loadProductsFromServer();
-			setInterval(this.loadProductsFromServer, this.props.pollInterval);
+	        this.loadProductsFromServer(1);
 		}
 		catch(err)
 		{
-			console.log(String.format("ERROR - {0}", err));
+			console.log("ERROR - " + err);
 		}	
 	},
 	render: function() {
@@ -89,11 +95,12 @@ var DevShop = React.createClass({
 					<h1>Dev Shop</h1>
 				</div>
 				<ProductForm onProductSubmit={this.handleProductSubmit} />
-				<ProductList data={this.state.data} handleRemoveList={this.handleRemoveList} />
+				<ProductList data={this.state.data} handleRemoveList={this.handleRemoveList} loadProductsFromServer={this.loadProductsFromServer} />
 			</div>
 		);
 	}
 });
+
 
 React.render(
   <DevShop url="/products" pollInterval={2000} />,

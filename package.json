@@ -12,15 +12,16 @@
     "superagent": "0.17.0",
     "supertest": "*",
     "request": "*",
-    "react-paginate-component": "*"
+    "react-paginate": "*",
+    "browserify": "~6.0.3"
   },
   "scripts": {
-  	"test": "echo \"Error: no test specified\" && exit 1",
-  	"start": "node server.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "engines": {
     "node": "0.12.5",
-	"npm": "2.11.2"
+    "npm": "2.11.2"
   },
   "repository": {
     "type": "git",

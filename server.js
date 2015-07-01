@@ -12,7 +12,7 @@ app.use('/', express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.get('/products', products.findAll);
+app.get('/products/:page', products.findAll);
 app.post('/products', products.addProduct);
 app.post('/products/:id', products.deleteProduct);
 

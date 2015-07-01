@@ -5,6 +5,8 @@ var Server = mongodb.Server,
     Db = mongodb.Db,
     BSON = mongodb.BSONPure;
 
+var PER_PAGE = 2;
+
 var server = new Server('localhost', 27017, {auto_reconnect: true});
 var db = new Db('myapp-dev', server);
 db.dropDatabase();
@@ -23,12 +25,21 @@ db.open(function(err, db) {
 });
 
 exports.findAll = function(req, res) {
+    var page = req.params.page;
+    console.log('Listing page: ' + page);
     db.collection('products', function(err, collection) {
         collection.find().toArray(function(err, items) {
-        	res.send(items);
+            var json = getPaginatedItems(items, page);
+
+            console.log('Listing page: ' + json);
+            return res.json(json);
         });
     });
 };
+
+function getPaginatedItems(items, offset) {
+    return items.slice(offset, offset + PER_PAGE);
+}
 
 function saveProduct(product)
 {

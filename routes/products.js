@@ -5,7 +5,7 @@ var Server = mongodb.Server,
     Db = mongodb.Db,
     BSON = mongodb.BSONPure;
 
-var PER_PAGE = 2;
+var PER_PAGE = 10;
 
 var server = new Server('localhost', 27017, {auto_reconnect: true});
 var db = new Db('myapp-dev', server);
@@ -27,22 +27,35 @@ db.open(function(err, db) {
 exports.findAll = function(req, res) {
     var page = req.params.page;
     console.log('Listing page: ' + page);
-    db.collection('products', function(err, collection) {
-        collection.find().toArray(function(err, items) {
-            console.log('All items: ' + items);            
-            var json = getPaginatedItems(items, page);
 
-            console.log('Listing page: ' + json);
-            return res.json(json);
-        });
-    });
+    loadProductItems(page, res);
 };
+
+function loadProductItems(page, res) {
+    try
+    {
+        db.collection('products', function(err, collection) {
+            collection.find().toArray(function(err, items) {
+                console.log('All items: ' + items);            
+                var json = getPaginatedItems(items, page);
+
+                console.log('Listing page: ' + json);
+                return res.json(json);
+            });
+        });
+    }
+    catch(err)
+    {
+        console.log("ERROR - " + err);
+    }
+}
 
 function getPaginatedItems(items, page) {
     try
     {
         var offset = parseInt(page-1);
         var start = parseInt(offset*PER_PAGE);
+
         return items.slice(start, parseInt(start+PER_PAGE));
     }
     catch(err)
@@ -51,21 +64,20 @@ function getPaginatedItems(items, page) {
     }
 }
 
-function saveProduct(product)
+function saveProduct(product, res)
 {
     db.collection('products', function(err, collection) {
         collection.insert(product, {safe:true}, function(err, result) {
             if (err) {
                 res.send({'error':'An error has occurred'});
             } else {
-                console.log('Success: ' + JSON.stringify(result[0]));
-                res.send(result[0]);
+                return loadProductItems(1, res);
             }
         });
     });
 }
 
-function getInfoFromUser(product)
+function getInfoFromUser(product, res)
 {
     var url = "https://api.github.com/users/"+product.author;
     request({
@@ -82,7 +94,7 @@ function getInfoFromUser(product)
         
         console.log("price: "+product.price);
 
-        saveProduct(product);
+        saveProduct(product, res);
     });
 }
 
@@ -100,7 +112,7 @@ exports.addProduct = function(req, res) {
     var product = req.body;
     console.log('Adding product: ' + JSON.stringify(product));
 
-    getInfoFromUser(product);    
+    getInfoFromUser(product, res);    
 }
 
 exports.deleteProduct = function(req, res) {

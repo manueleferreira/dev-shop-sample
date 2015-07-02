@@ -18,12 +18,12 @@ var Product = React.createClass({
 	},
 	render: function(){
 		return (
-			<tr class="product">
+			<tr className="product">
 				<td>{this.props._id}</td>
 				<td>{this.props.author}</td>
 				<td>{this.props.price}</td>
 				<td>{this.props.hours}</td>
-				<td><button class="btn btn-danger pull-right" onClick={this.onProductRemove}>Remove</button></td>
+				<td><button className="btn btn-danger pull-right" onClick={this.onProductRemove}>Remove</button></td>
             </tr>
 		);
 	}
@@ -58,17 +58,17 @@ var ProductForm = React.createClass({
 	},
 	render: function(){
 		return (
-			<div class="row">
+			<div className="row">
 				<h2>Add a developer</h2>
-				<form class="form-inline" role="form" onSubmit={this.handleSubmit}>
-					<div class="form-group">
-						<input type="text" placeholder="GitHub Username" class="form-control" ref="author" required></input>
+				<form className="form-inline" role="form" onSubmit={this.handleSubmit}>
+					<div className="form-group">
+						<input type="text" placeholder="GitHub Username" className="form-control" ref="author" required></input>
 					</div>
-					<div class="form-group">
-						<input type="text" placeholder="Hours" class="form-control" ref="hours" required></input>
+					<div className="form-group">
+						<input type="text" placeholder="Hours" className="form-control" ref="hours" required></input>
 					</div>
-					<button type="submit" class="btn btn-success">Add</button>
-				</form>
+					<button type="submit" className="btn btn-success">Add</button>
+				</form>	
 			</div>
 		);
 	}

@@ -90,12 +90,13 @@ var DevShop = React.createClass({
 	},
 	render: function() {
 		return (
-			<div>
-				<div class="row">
+			<div className="container">
+				<div className="row">
 					<h1>Dev Shop</h1>
 				</div>
 				<ProductForm onProductSubmit={this.handleProductSubmit} />
 				<ProductList data={this.state.data} handleRemoveList={this.handleRemoveList} loadProductsFromServer={this.loadProductsFromServer} />
+				<button type="submit" className="btn btn-success">Buy Cart</button>
 			</div>
 		);
 	}

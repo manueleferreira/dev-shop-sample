@@ -13,7 +13,7 @@ var Product = React.createClass({
 		}
 		catch(err)
 		{
-			console.log("ERROR - " + err);
+			console.log("ERROR onProductRemove - " + err);
 		}
 	},
 	render: function(){
@@ -53,7 +53,7 @@ var ProductForm = React.createClass({
 		}
 		catch(err)
 		{
-			console.log("ERROR - " + err);
+			console.log("ERROR handleSubmit - " + err);
 		}
 	},
 	render: function(){

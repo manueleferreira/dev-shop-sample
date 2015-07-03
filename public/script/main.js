@@ -1,4 +1,25 @@
 var DevShop = React.createClass({
+	onBuyCart: function() {
+		try
+		{
+			var urlCart = "/cart";
+			$.ajax({
+				url: urlCart,
+				dataType: 'json',
+				type: "POST",
+				success: function(data){
+					alert("Congratulations!");
+				}.bind(this),
+				error: function(xhr, status, err) {
+					console.error(urlCart, status, err.toString());
+				}.bind(this)
+			})
+		}
+		catch(err)
+		{
+			console.log("ERROR onBuyCart - " + err);
+		}
+	},
 	handleRemoveList: function(id) {
 		try
 		{
@@ -8,9 +29,7 @@ var DevShop = React.createClass({
 				dataType: 'json',
 				type: "POST",
 				success: function(data){
-					this.setState({
-		                data: data
-        			});
+					// DOES NOTHING
 				}.bind(this),
 				error: function(xhr, status, err) {
 					console.error(this.props.url, status, err.toString());
@@ -19,7 +38,7 @@ var DevShop = React.createClass({
 		}
 		catch(err)
 		{
-			console.log("ERROR - " + err);
+			console.log("ERROR handleRemoveList - " + err);
 		}
 	},
 	loadProductsFromServer: function(page){
@@ -42,7 +61,7 @@ var DevShop = React.createClass({
 		}
 		catch(err)
 		{
-			console.log("ERROR - " + err);
+			console.log("ERROR loadProductsFromServer - " + err);
 		}
 	},
 	handleProductSubmit: function(product) {
@@ -65,7 +84,7 @@ var DevShop = React.createClass({
 		}
 		catch(err)
 		{
-			console.log("ERROR - " + err);
+			console.log("ERROR handleProductSubmit - " + err);
 		}
 	},
 	getInitialState: function() {
@@ -75,7 +94,7 @@ var DevShop = React.createClass({
 		}
 		catch(err)
 		{
-			console.log("ERROR - " + err);
+			console.log("ERROR getInitialState - " + err);
 		}
 	},
 	componentDidMount: function(){
@@ -85,7 +104,7 @@ var DevShop = React.createClass({
 		}
 		catch(err)
 		{
-			console.log("ERROR - " + err);
+			console.log("ERROR componentDidMount- " + err);
 		}	
 	},
 	render: function() {
@@ -96,7 +115,7 @@ var DevShop = React.createClass({
 				</div>
 				<ProductForm onProductSubmit={this.handleProductSubmit} />
 				<ProductList data={this.state.data} handleRemoveList={this.handleRemoveList} loadProductsFromServer={this.loadProductsFromServer} />
-				<button type="submit" className="btn btn-success">Buy Cart</button>
+				<button className="btn btn-success" onClick={this.onBuyCart}>Buy Cart</button>
 			</div>
 		);
 	}
@@ -104,6 +123,6 @@ var DevShop = React.createClass({
 
 
 React.render(
-  <DevShop url="/products" pollInterval={2000} />,
-  document.getElementById('container')
+	<DevShop url="/products" pollInterval={2000} />,
+	document.getElementById('container')
 );

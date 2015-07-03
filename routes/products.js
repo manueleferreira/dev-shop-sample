@@ -1,5 +1,6 @@
 var mongodb = require('mongodb');
 var request = require("request");
+var uuid = require('node-uuid');
 
 var Server = mongodb.Server,
     Db = mongodb.Db,
@@ -35,34 +36,22 @@ exports.findAll = function(req, res) {
     try
     {
         var page = req.params.page;
-        console.log('Listing page: ' + page);
+        
+        if( req.session.items == undefined )
+        {
+            req.session.items =  [];
+        }
+        
+        var items = req.session.items;
+        var json = getPaginatedItems(items, page);
 
-        loadProductItems(page, res);
+        return res.json(json);
     }
     catch(err)
     {
         console.log("ERROR - " + err);
     }
 };
-
-function loadProductItems(page, res) {
-    try
-    {
-        db.collection('products', function(err, collection) {
-            collection.find().toArray(function(err, items) {
-                console.log('All items: ' + items);            
-                var json = getPaginatedItems(items, page);
-
-                console.log('Listing page: ' + json);
-                return res.json(json);
-            });
-        });
-    }
-    catch(err)
-    {
-        console.log("ERROR - " + err);
-    }
-}
 
 function getPaginatedItems(items, page) {
     try
@@ -78,19 +67,16 @@ function getPaginatedItems(items, page) {
     }
 }
 
-function saveProduct(product, res)
+function saveProduct(product, res, req)
 {
     try
     {
-        db.collection('products', function(err, collection) {
-            collection.insert(product, {safe:true}, function(err, result) {
-                if (err) {
-                    res.send({'error':'An error has occurred'});
-                } else {
-                    return loadProductItems(1, res);
-                }
-            });
-        });
+        var items = req.session.items;
+        product._id = uuid.v1();
+        items.push(product);
+
+        var json = getPaginatedItems(items, 1);
+        return res.json(json);
     }
     catch(err)
     {
@@ -98,7 +84,7 @@ function saveProduct(product, res)
     }
 }
 
-function getInfoFromUser(product, res)
+function getInfoFromUser(product, res, req)
 {
     try
     {
@@ -117,7 +103,7 @@ function getInfoFromUser(product, res)
             
             console.log("price: "+product.price);
 
-            saveProduct(product, res);
+            saveProduct(product, res, req);
         });
     }
     catch(err)
@@ -149,7 +135,7 @@ exports.addProduct = function(req, res) {
         var product = req.body;
         console.log('Adding product: ' + JSON.stringify(product));
 
-        getInfoFromUser(product, res);    
+        getInfoFromUser(product, res, req);    
     }
     catch(err)
     {
@@ -157,21 +143,50 @@ exports.addProduct = function(req, res) {
     }
 }
 
-exports.deleteProduct = function(req, res) {
+exports.saveCart = function(req, res) {
     try
     {
-        var id = req.params.id;
-        console.log('Deleting product: ' + id);
-        db.collection('products', function(err, collection) {
-            collection.remove({'_id':new BSON.ObjectID(id)}, {safe:true}, function(err, result) {
+        var items = req.session.items;
+        var cart = {};
+        cart.products = items;
+        
+        db.collection('carts', function(err, collection) {
+            collection.insert(cart, {safe:true}, function(err, result) {
                 if (err) {
-                    res.send({'error':'An error has occurred - ' + err});
+                    res.send({'error':'An error has occurred'});
                 } else {
-                    console.log('' + result + ' document(s) deleted');
-                    res.send(req.body);
+                    var products = result[0].products;
+                    return res.json(products);
                 }
             });
         });
+    }
+    catch(err)
+    {
+        console.log("ERROR - " + err);
+    }
+}
+
+exports.deleteProduct = function(req, res)
+{
+    try
+    {
+        var items = req.session.items;
+        var id = req.params.id;
+
+        for(var i=0; i<items.length; i++) 
+        {
+            if(items[i]._id == id) 
+            {
+                items.splice(i, 1);
+                break;
+            }
+        }
+
+        req.session.items = items;
+
+        var json = getPaginatedItems(items, 1);
+        return res.json(json);        
     }
     catch(err)
     {

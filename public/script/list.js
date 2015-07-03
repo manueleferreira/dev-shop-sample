@@ -6,11 +6,18 @@ var ProductList = React.createClass({
 		}
 		catch(err)
 		{
-			console.log("ERROR - " + err);
+			console.log("ERROR handleRemove - " + err);
 		}
 	},
 	onChangePage: function(page) {
-        this.props.loadProductsFromServer(page);
+		try
+		{
+        	this.props.loadProductsFromServer(page);
+        }
+		catch(err)
+		{
+			console.log("ERROR onChangePage - " + err);
+		}
     },
 	render: function() {
 		var functionRemove = this.handleRemove;

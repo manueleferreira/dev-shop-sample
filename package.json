@@ -13,7 +13,10 @@
     "supertest": "*",
     "request": "*",
     "react-paginate": "*",
-    "browserify": "~6.0.3"
+    "browserify": "~6.0.3",
+    "cookie-parser": "*",
+    "express-session": "*",
+    "node-uuid": "*"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

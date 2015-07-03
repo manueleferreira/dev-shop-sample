@@ -29,7 +29,9 @@ var DevShop = React.createClass({
 				dataType: 'json',
 				type: "POST",
 				success: function(data){
-					// DOES NOTHING
+					this.setState({
+		                data: data
+        			});
 				}.bind(this),
 				error: function(xhr, status, err) {
 					console.error(this.props.url, status, err.toString());

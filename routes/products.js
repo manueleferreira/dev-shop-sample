@@ -186,7 +186,7 @@ exports.deleteProduct = function(req, res)
         req.session.items = items;
 
         var json = getPaginatedItems(items, 1);
-        return res.json(json);        
+        return res.json(json);
     }
     catch(err)
     {

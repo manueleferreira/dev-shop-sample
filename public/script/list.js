@@ -23,7 +23,7 @@ var ProductList = React.createClass({
 		var functionRemove = this.handleRemove;
 		var productNodes = this.props.data.map(function(product){
 			return (
-				<Product _id={product._id} author={product.author} price={product.price} hours={product.hours} handleRemove={functionRemove}></Product>
+				<Product key={product._id} _id={product._id} author={product.author} price={product.price} hours={product.hours} handleRemove={functionRemove}></Product>
 			);
 		});
 		return (

@@ -5,7 +5,7 @@ var Product = React.createClass({
 			console.log("handleRemove");
 			var node = this.getDOMNode();
 			React.unmountComponentAtNode(node);
-			$(node).remove();			
+			//$(node).remove();			
 
 			this.props.handleRemove(this.props._id);
 

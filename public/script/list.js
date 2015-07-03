@@ -34,7 +34,7 @@ var ProductList = React.createClass({
 				<table className="table">
 					<thead>
 						<tr>
-						  <th colSpan="2">Username</th>
+						  <th>Username</th>
 						  <th>Price</th>
 						  <th colSpan="2">Hours</th>
 						</tr>

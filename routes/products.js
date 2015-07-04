@@ -21,7 +21,6 @@ db.open(function(err, db) {
             db.collection('products', {strict:true}, function(err, collection) {
                 if (err) {
                     console.log("The 'products' collection doesn't exist. Creating it with sample data...");
-                    populateDB();
                 }
             });
         }
@@ -203,25 +202,3 @@ exports.deleteProduct = function(req, res)
         console.log("ERROR - " + err);
     }
 }
-
-/*--------------------------------------------------------------------------------------------------------------------*/
-// Populate database with sample data -- Only used once: the first time the application is started.
-// You'd typically not find this code in a real-life app, since the database would already exist.
-var populateDB = function() { 
-    try
-    {
-        console.log("Populating product database...");
-        var products = [
-            {"author": "James", "price": "R$1"},
-            {"author": "Julie", "price": "R$2"}
-        ];
-     
-        db.collection('products', function(err, collection) {
-            collection.insert(products, {safe:true}, function(err, result) {});
-        });
-    }
-    catch(err)
-    {
-        console.log("ERROR - " + err);
-    }
-};

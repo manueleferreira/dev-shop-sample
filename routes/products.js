@@ -35,7 +35,7 @@ exports.findAll = function(req, res) {
     try
     {
         var page = req.params.page;
-        
+        console.log("req.session.items:"+req.session.items);
         if( req.session.items == undefined )
         {
             req.session.items =  [];
@@ -173,12 +173,12 @@ exports.saveCart = function(req, res) {
                         return res.json("error");
                     } else {
                         console.log("empty false")
-                        req.session.regenerate();
-                        req.session.destroy();
-                        req.session.reset();
-                        delete req.session.items;
+                        //req.session.regenerate();
+                        //req.session.destroy();
+                        //req.session.reset();
+                        //delete req.session.items;
                         req.session.items = null;
-                        req.session = null;
+                        //req.session = null;
                         return res.json("false");
                     }
                 });

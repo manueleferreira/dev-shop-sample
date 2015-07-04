@@ -43,6 +43,7 @@ exports.findAll = function(req, res) {
         
         var items = req.session.items;
         var json = getPaginatedItems(items, page);
+        console.log("json:"+json);
 
         return res.json(json);
     }

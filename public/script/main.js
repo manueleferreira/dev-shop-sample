@@ -8,6 +8,9 @@ var DevShop = React.createClass({
 				dataType: 'json',
 				type: "POST",
 				success: function(data){
+					this.setState({
+		                data: []
+        			});
 					location.reload();
 					alert("Congratulations!");
 				}.bind(this),

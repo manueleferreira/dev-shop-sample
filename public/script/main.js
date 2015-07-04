@@ -11,7 +11,6 @@ var DevShop = React.createClass({
 					this.setState({
 		                data: []
         			});
-					location.reload();
 					alert("Congratulations!");
 				}.bind(this),
 				error: function(xhr, status, err) {

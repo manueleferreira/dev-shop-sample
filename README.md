@@ -20,6 +20,13 @@ Tecnologias:
 
 A comunicação entre as camadas de front-end e back-end ocorre através de uma API Rest desenvolvida usando o Node.Js. Essa API é estrutura utilizando JSON.
 
+Testes
+------------
+
+Para executar os testes unitários deve ser feito:
+mocha test/products.test.js
+
+
 Aplicação em Produção
 ------------
 

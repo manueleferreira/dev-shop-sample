@@ -71,6 +71,11 @@ function saveProduct(product, res, req)
 {
     try
     {
+        if( req.session.items == undefined )
+        {
+            req.session.items =  [];
+        }
+
         var items = req.session.items;
         product._id = uuid.v1();
         items.push(product);
@@ -146,6 +151,11 @@ exports.addProduct = function(req, res) {
 exports.saveCart = function(req, res) {
     try
     {
+        if( req.session.items == undefined )
+        {
+            req.session.items =  [];
+        }
+        
         var items = req.session.items;
         var cart = {};
         cart.products = items;

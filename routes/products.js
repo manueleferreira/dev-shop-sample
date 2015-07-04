@@ -155,7 +155,7 @@ exports.saveCart = function(req, res) {
         {
             req.session.items =  [];
         }
-        
+
         var items = req.session.items;
         var cart = {};
         cart.products = items;
@@ -165,6 +165,7 @@ exports.saveCart = function(req, res) {
                 if (err) {
                     res.send({'error':'An error has occurred'});
                 } else {
+                    req.session.items = undefined;
                     var products = result[0].products;
                     return res.json(products);
                 }

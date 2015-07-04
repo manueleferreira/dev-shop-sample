@@ -17,7 +17,7 @@ app.use(session({
   },
   resave: true,
   saveUninitialized: true,
-  secret: 'keyboard cat'
+  secret: '1234567890QWERTY'
 }))
 
 app.set('port', (process.env.PORT || 3000));

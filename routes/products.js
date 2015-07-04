@@ -125,6 +125,10 @@ function calculatePrice(json)
         var followers = json.followers;
 
         generatedPrice = repos+followers;
+        if( generatedPrice == 0 )
+        {
+            generatedPrice = 10;
+        }
 
         return generatedPrice;
     }
@@ -169,6 +173,11 @@ exports.saveCart = function(req, res) {
                     } else {
                         console.log("empty false")
                         req.session.regenerate();
+                        req.session.destroy();
+                        req.session.reset();
+                        delete req.session.items;
+                        req.session.items = null;
+                        req.session = null;
                         return res.json("false");
                     }
                 });

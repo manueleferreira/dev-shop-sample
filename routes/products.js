@@ -170,6 +170,7 @@ exports.saveCart = function(req, res) {
                 collection.insert(cart, {safe:true}, function(err, result) {
                     if (err) {
                         res.send({'error':'An error has occurred'});
+                        return res.json("error");
                     } else {
                         console.log("empty false")
                         req.session.regenerate();

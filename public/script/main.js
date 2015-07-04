@@ -10,6 +10,10 @@ var DevShop = React.createClass({
 				success: function(empty){
 					if( empty == "true" )
 					{
+						alert("Servidor Error!");	
+					}
+					else if( empty == "true" )
+					{
 						alert("Empty Cart! Please, add one product!");	
 					}
 					else

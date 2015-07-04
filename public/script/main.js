@@ -7,11 +7,18 @@ var DevShop = React.createClass({
 				url: urlCart,
 				dataType: 'json',
 				type: "POST",
-				success: function(data){
-					this.setState({
-		                data: []
-        			});
-					alert("Congratulations!");
+				success: function(empty){
+					if( empty == "true" )
+					{
+						alert("Empty Cart! Please, add one product!");	
+					}
+					else
+					{
+						this.setState({
+		                	data: []
+        				});
+						alert("Congratulations!");
+					}
 				}.bind(this),
 				error: function(xhr, status, err) {
 					console.error(urlCart, status, err.toString());

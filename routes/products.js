@@ -157,19 +157,29 @@ exports.saveCart = function(req, res) {
         }
 
         var items = req.session.items;
-        var cart = {};
-        cart.products = items;
+        if( items.length > 0 )
+        {
+            var cart = {};
+            cart.products = items;
+
+            db.collection('carts', function(err, collection) {
+                collection.insert(cart, {safe:true}, function(err, result) {
+                    if (err) {
+                        res.send({'error':'An error has occurred'});
+                    } else {
+                        console.log("empty false")
+                        req.session.items = [];
+                        return res.json("false");
+                    }
+                });
+            });    
+        }
+        else
+        {
+            console.log("empty true")
+            return res.json("true");
+        }
         
-        db.collection('carts', function(err, collection) {
-            collection.insert(cart, {safe:true}, function(err, result) {
-                if (err) {
-                    res.send({'error':'An error has occurred'});
-                } else {
-                    req.session.items = undefined;
-                    return res.json("");
-                }
-            });
-        });
     }
     catch(err)
     {

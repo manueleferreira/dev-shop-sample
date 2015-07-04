@@ -168,8 +168,6 @@ exports.saveCart = function(req, res) {
                         res.send({'error':'An error has occurred'});
                     } else {
                         console.log("empty false")
-                        req.session.destroy();
-                        req.session = null;
                         req.session.regenerate();
                         return res.json("false");
                     }

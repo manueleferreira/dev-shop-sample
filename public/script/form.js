@@ -21,7 +21,7 @@ var Product = React.createClass({
 			<tr className="product">
 				<td className="hide">{this.props._id}</td>
 				<td>{this.props.author}</td>
-				<td>{this.props.price}</td>
+				<td>${this.props.price}</td>
 				<td>{this.props.hours}</td>
 				<td><button className="btn btn-danger pull-right" onClick={this.onProductRemove}>Remove</button></td>
             </tr>

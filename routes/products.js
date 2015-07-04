@@ -169,6 +169,7 @@ exports.saveCart = function(req, res) {
                     } else {
                         console.log("empty false")
                         req.session.destroy();
+                        req.session = null;
                         return res.json("false");
                     }
                 });

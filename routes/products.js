@@ -166,8 +166,7 @@ exports.saveCart = function(req, res) {
                     res.send({'error':'An error has occurred'});
                 } else {
                     req.session.items = undefined;
-                    var products = result[0].products;
-                    return res.json(products);
+                    return res.json("");
                 }
             });
         });

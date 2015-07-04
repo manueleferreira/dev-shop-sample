@@ -170,6 +170,7 @@ exports.saveCart = function(req, res) {
                         console.log("empty false")
                         req.session.destroy();
                         req.session = null;
+                        req.session.regenerate();
                         return res.json("false");
                     }
                 });
